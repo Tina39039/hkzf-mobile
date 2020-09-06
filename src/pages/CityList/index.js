@@ -3,8 +3,8 @@ import React from 'react'
 import axios from 'axios'
 import {getCurrentCity} from '../../utils'
 import {List,AutoSizer} from 'react-virtualized';
-import NavHeader from '../../components/NavHeader'
-import './index.scss'
+import NavHeader from '../../components/NavHeader';
+import './index.scss';
 // 数据格式化方法
 // list:[{},{}]
 const formatCityData = (list) => {
