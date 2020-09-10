@@ -1,5 +1,5 @@
 import React from 'react'
-// import { Toast } from 'antd-mobile';
+import { Toast } from 'antd-mobile';
 import axios from 'axios'
 import {getCurrentCity} from '../../utils'
 import {List,AutoSizer} from 'react-virtualized';
@@ -76,15 +76,20 @@ const formatCityIndex = (letter) => {
 // // 渲染右侧索引的数据格式为：
 // ['a','b']
 
+// 有房源的城市
+const HOUSE_CITY = ['北京','上海','广州','深圳']
+
 export default class CityList  extends React.Component {
     constructor(props){
         super(props)
+
         this.state = {
             cityList : {},
             cityIndex : [],
             // 指定右侧字母索引列表高亮的索引号
             activeIndex : 0
         }
+        
         // 创建ref对象
         this.cityListComponent = React.createRef()
     }
@@ -131,6 +136,16 @@ export default class CityList  extends React.Component {
             
     }
 
+    changeCity({ label, value }) {
+        if (HOUSE_CITY.indexOf(label) > -1) {
+          // 有
+          localStorage.setItem('hkzf_city', JSON.stringify({ label, value }))
+          this.props.history.go(-1)
+        } else {
+          Toast.info('该城市暂无房源数据', 1, null, false)
+        }
+      }
+
     // List组件渲染每一行的方法：
     rowRenderer = ({
         key,
@@ -149,7 +164,7 @@ export default class CityList  extends React.Component {
             <div key={key} style={style} className="city">
                 <div className="title">{formatCityIndex(letter)}</div>
                 {
-                    cityList[letter].map(item => <div className="name" key={item.value}>{item.label}</div> )
+                    cityList[letter].map(item => <div className="name" key={item.value} onClick={() => this.changeCity(item)}>{item.label}</div> )
                 }
                 
             </div>

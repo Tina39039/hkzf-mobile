@@ -15,11 +15,11 @@ import {BrowserRouter as Router,Route,Link,Redirect} from 'react-router-dom'
 // 导入首页和城市选择这两个组件（页面）
 import Home from './pages/Home'
 import CityList from './pages/CityList'
-
-
-
-
 import Map from './pages/Map'
+// 房源详情组件
+import HouseDetail from './pages/HouseDetail'
+
+
 
 function App() {
   return (
@@ -41,6 +41,9 @@ function App() {
         <Route path="/home" component={Home} />
         <Route path="/citylist" component={CityList} />
         <Route path="/map" component={Map} />
+
+        {/* 房源详情的路由规则： */}
+        <Route path="/detail/:id" component={HouseDetail} />
       
       </div>
     </Router>

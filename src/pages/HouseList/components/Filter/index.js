@@ -1,5 +1,7 @@
 import React , {Component} from 'react'
 
+import {Spring} from 'react-spring/renderprops'
+
 import FilterTitle from '../FilterTitle'
 import FilterPicker from '../FilterPicker'
 import FilterMore from '../FilterMore'
@@ -8,6 +10,7 @@ import FilterMore from '../FilterMore'
 import {API} from '../../../../utils/api'
 
 import styles from './index.module.css'
+
 // import { logRoles } from '@testing-library/react'
 
 // 标题高亮状态
@@ -292,16 +295,38 @@ export default class Filter extends Component {
         )
     }
 
+    // 渲染遮罩层
+    renderMask(){
+        const {openType} = this.state
+
+        const isHide = openType === 'more' || openType === ''
+        
+        return (
+            <Spring from={{opacity:0}} to={{opacity: isHide ? 0 : 1}}>
+                {props => {
+                    // 说明遮罩层已经完成动画效果，隐藏了
+                    if(props.opacity === 0){
+                        return null
+                    }
+
+                    return (
+                        <div 
+                          style={props} 
+                          className={styles.mask} 
+                          onClick={() => this.onCancel(openType)}
+                        />
+                    )
+                }}
+            </Spring>
+        )  
+    }
+
     render(){
-        const {titleSelectedStatus,openType} = this.state
+        const {titleSelectedStatus} = this.state
         return(
             <div className={styles.root}>
                 {/** 前三个菜单的遮罩层 */}
-                {
-                    (openType === 'area' || openType === 'mode' || openType=== 'price')
-                    ? <div className={styles.mask} onClick={() => this.onCancel(openType)}/>
-                    : null
-                }
+                {this.renderMask()}
 
                 <div className={styles.content}>
                     {/** 标题栏 */}

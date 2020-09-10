@@ -6,6 +6,7 @@ import {List,AutoSizer,WindowScroller,InfiniteLoader} from 'react-virtualized'
 
 import {API} from '../../utils/api'
 import { BASE_URL} from '../../utils/url'
+import {getCurrentCity} from '../../utils'
 
 import SearchHeader from '../../components/SearchHeader'
 import Filter from './components/Filter'
@@ -17,7 +18,7 @@ import NoHouse from '../../components/NoHouse'
 import styles from './index.module.css'
 
 // 获取当前定位城市信息
-const {label,value} = JSON.parse(localStorage.getItem('hkzf_city'))
+// const {label,value} = JSON.parse(localStorage.getItem('hkzf_city'))
 
 export default class HouseList extends React.Component {
 
@@ -30,11 +31,20 @@ export default class HouseList extends React.Component {
         isLoading : false
     }
 
+    // 初始化默认值
+    label = ''
+    value = ''
+
     // 初始化实例属性
     filters = {}
 
-    componentDidMount(){
+    async componentDidMount(){
+        const {label,value} = await getCurrentCity()
+        this.label = label
+        this.value = value
+
         this.searchHouseList()
+
     }
 
     // 用来获取房屋列表数据
@@ -50,7 +60,7 @@ export default class HouseList extends React.Component {
 
         const res = await API.get('/houses',{
             params : {
-                cityId : value,
+                cityId : this.value,
                 ...this.filters,
                 start : 1,
                 end : 20
@@ -130,7 +140,7 @@ export default class HouseList extends React.Component {
         return new Promise(resolve => {
             API.get('/houses',{
                 params : {
-                    cityId : value,
+                    cityId : this.value,
                     ...this.filters,
                     start : startIndex,
                     end : stopIndex
@@ -213,7 +223,7 @@ export default class HouseList extends React.Component {
                       className="iconfont icon-back" 
                       onClick={() => this.props.history.go(-1)}
                     />
-                    <SearchHeader cityName={label} className={styles.searchHeader} />
+                    <SearchHeader cityName={this.label} className={styles.searchHeader} />
                 </Flex>
 
                 {/** 条件筛选栏 */}
