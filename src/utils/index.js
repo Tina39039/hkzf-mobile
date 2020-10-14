@@ -1,4 +1,5 @@
 import axios from 'axios'
+
 // 步骤：
 // 1)在utils目录中，新建index.js，在该文件中封装
 // 2)创建并导出获取定位城市的函数getCurrentCity
@@ -31,3 +32,7 @@ export const getCurrentCity = () => {
     // 因为此处的Promise不会失败，所以此处只要返回一个成功的Promise即可
     return Promise.resolve(localCity)
 }
+
+export { API } from './api'
+export { BASE_URL } from './url'
+

@@ -8,6 +8,8 @@ import HousePackage from '../../components/HousePackage'
 
 import { BASE_URL } from '../../utils/url'
 
+import {API} from '../../utils/api'
+
 import styles from './index.module.css'
 
 // 猜你喜欢
@@ -91,39 +93,62 @@ export default class HouseDetail extends Component {
       // 房屋标识
       houseCode: '',
       // 房屋描述
-      description: ''
+      description: '',
+      houseImg: []
     }
   }
 
   componentDidMount() {
     // 获取配置好的路由参数：
-    this.renderMap('天山星城', {
-      latitude: '31.219228',
-      longitude: '121.391768'
-    })
+    // console.log('路由参数对象：',this.props.match.params);
+
+    // 获取房屋数据
+    this.getHouseDetail()
+
+
+    
   }
 
+  /**
+   * 展示房屋详情：
+   *    1. 在找房页面，给每一个房屋列表项添加单击事件，在点击时跳转到房屋详情页面
+   *    2. 在单击事件中，获取到当前房屋id
+   *    3. 根据房屋详情的路由地址，调用history.push()实现路由跳转
+   *    4. 封装getHouseDetail方法，在componentDidMount中调用该方法
+   *    5. 在方法中，通过路由参数获取到当前房屋id
+   *    6. 使用API发送请求，获取房屋数据，保存到state中
+   *    7. 使用房屋数据，渲染房屋详情 
+   */
+
+  async getHouseDetail(){
+    const { id } = this.props.match.params
+
+    // 开启loading
+    this.setState({
+      isLoading : true
+    })
+    const res = await API.get(`/houses/${id}`)
+    console.log(res); 
+
+    this.setState({
+      houseInfo : res.data.body,
+      isLoading : false
+    })
+
+    const {community,coord} = res.data.body
+
+    // 渲染地图
+    this.renderMap(community, coord)
+  }
   // 渲染轮播图结构
   renderSwipers() {
     const {
-      houseInfo: { slides }
+      houseInfo: {houseImg}
     } = this.state
 
-    return slides.map(item => (
-      <a
-        key={item.id}
-        href="http://itcast.cn"
-        style={{
-          display: 'inline-block',
-          width: '100%',
-          height: 252
-        }}
-      >
-        <img
-          src={BASE_URL + item.imgSrc}
-          alt=""
-          style={{ width: '100%', verticalAlign: 'top' }}
-        />
+    return houseImg.map(item => (
+      <a key={item} href="http://www.baidu.com">
+        <img src={BASE_URL + item} alt="" />
       </a>
     ))
   }
@@ -149,8 +174,34 @@ export default class HouseDetail extends Component {
     map.addOverlay(label)
   }
 
+  // 渲染标签
+  renderTags(){
+    const {houseInfo : {tags}} = this.state
+
+    return tags.map((item,index) => {
+      // 如果标签数量超过三个，后面标签都展示为第三个标签的样式
+      let tagClass = ''
+      if(index > 2){
+        tagClass = 'tag3'
+      }else{
+        tagClass = 'tag' + (index+1)
+      }
+      return (
+        <span 
+          key={item} 
+          className={[styles.tag, styles[tagClass]].join(' ')}
+        > 
+          {item}
+        </span>
+      )
+    })
+      
+  }
+
   render() {
-    const { isLoading } = this.state
+    const { isLoading , houseInfo:{
+      community , title , price , roomType , size , floor , oriented , supporting , description
+    }} = this.state
     return (
       <div className={styles.root}>
         {/* 导航栏 */}
@@ -158,7 +209,7 @@ export default class HouseDetail extends Component {
           className={styles.navHeader}
           rightContent={[<i key="share" className="iconfont icon-share" />]}
         >
-          天山星城
+          {community}
         </NavHeader>
 
         {/* 轮播图 */}
@@ -175,30 +226,28 @@ export default class HouseDetail extends Component {
         {/* 房屋基础信息 */}
         <div className={styles.info}>
           <h3 className={styles.infoTitle}>
-            整租 · 精装修，拎包入住，配套齐Q，价格优惠
+            {title}
           </h3>
           <Flex className={styles.tags}>
             <Flex.Item>
-              <span className={[styles.tag, styles.tag1].join(' ')}>
-                随时看房
-              </span>
+              {this.renderTags()}
             </Flex.Item>
           </Flex>
 
           <Flex className={styles.infoPrice}>
             <Flex.Item className={styles.infoPriceItem}>
               <div>
-                8500
+                {price}
                 <span className={styles.month}>/月</span>
               </div>
               <div>租金</div>
             </Flex.Item>
             <Flex.Item className={styles.infoPriceItem}>
-              <div>1室1厅1卫</div>
+              <div>{roomType}</div>
               <div>房型</div>
             </Flex.Item>
             <Flex.Item className={styles.infoPriceItem}>
-              <div>78平米</div>
+              <div>{size}平米</div>
               <div>面积</div>
             </Flex.Item>
           </Flex>
@@ -211,12 +260,12 @@ export default class HouseDetail extends Component {
               </div>
               <div>
                 <span className={styles.title}>楼层：</span>
-                低楼层
+                {floor}
               </div>
             </Flex.Item>
             <Flex.Item>
               <div>
-                <span className={styles.title}>朝向：</span>南
+                <span className={styles.title}>朝向：</span>{oriented.join('、')}
               </div>
               <div>
                 <span className={styles.title}>类型：</span>普通住宅
@@ -229,7 +278,7 @@ export default class HouseDetail extends Component {
         <div className={styles.map}>
           <div className={styles.mapTitle}>
             小区：
-            <span>天山星城</span>
+            <span>{community}</span>
           </div>
           <div className={styles.mapContainer} id="map">
             地图
@@ -239,19 +288,15 @@ export default class HouseDetail extends Component {
         {/* 房屋配套 */}
         <div className={styles.about}>
           <div className={styles.houseTitle}>房屋配套</div>
-          <HousePackage
-            list={[
-              '电视',
-              '冰箱',
-              '洗衣机',
-              '空调',
-              '热水器',
-              '沙发',
-              '衣柜',
-              '天然气'
-            ]}
-          />
-          {/* <div className="title-empty">暂无数据</div> */}
+            {
+              supporting.length === 0 ? (
+                <div className={styles.titleEmpty}>暂无数据</div>
+              ) : (
+                <HousePackage list={supporting} />
+              )
+            }
+          
+          {/*  */}
         </div>
 
         {/* 房屋概况 */}
@@ -273,11 +318,7 @@ export default class HouseDetail extends Component {
             </div>
 
             <div className={styles.descText}>
-              {/* {description || '暂无房屋描述'} */}
-              1.周边配套齐全，地铁四号线陶然亭站，交通便利，公交云集，距离北京南站、西站都很近距离。
-              2.小区规模大，配套全年，幼儿园，体育场，游泳馆，养老院，小学。
-              3.人车分流，环境优美。
-              4.精装两居室，居家生活方便，还有一个小书房，看房随时联系。
+              {description || '暂无房屋描述'} 
             </div>
           </div>
         </div>
