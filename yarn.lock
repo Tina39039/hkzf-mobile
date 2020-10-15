@@ -1115,6 +1115,13 @@
   dependencies:
     regenerator-runtime "^0.13.4"
 
+"@babel/runtime@^7.10.5":
+  version "7.12.0"
+  resolved "https://registry.npm.taobao.org/@babel/runtime/download/@babel/runtime-7.12.0.tgz?cache=0&sync_timestamp=1602706727240&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40babel%2Fruntime%2Fdownload%2F%40babel%2Fruntime-7.12.0.tgz#98bd7666186969c04be893d747cf4a6c6c8fa6b0"
+  integrity sha1-mL12ZhhpacBL6JPXR89KbGyPprA=
+  dependencies:
+    regenerator-runtime "^0.13.4"
+
 "@babel/template@^7.10.4", "@babel/template@^7.4.0", "@babel/template@^7.8.6":
   version "7.10.4"
   resolved "https://registry.npm.taobao.org/@babel/template/download/@babel/template-7.10.4.tgz#3251996c4200ebc71d1a8fc405fba940f36ba278"
@@ -4985,6 +4992,11 @@ flush-write-stream@^1.0.0:
     inherits "^2.0.3"
     readable-stream "^2.3.6"
 
+fn-name@~3.0.0:
+  version "3.0.0"
+  resolved "https://registry.npm.taobao.org/fn-name/download/fn-name-3.0.0.tgz#0596707f635929634d791f452309ab41558e3c5c"
+  integrity sha1-BZZwf2NZKWNNeR9FIwmrQVWOPFw=
+
 follow-redirects@1.5.10:
   version "1.5.10"
   resolved "https://registry.npm.taobao.org/follow-redirects/download/follow-redirects-1.5.10.tgz#7b7a9f9aea2fdff36786a94ff643ed07f4ff5e2a"
@@ -7038,7 +7050,7 @@ locate-path@^5.0.0:
   dependencies:
     p-locate "^4.1.0"
 
-lodash-es@^4.17.14:
+lodash-es@^4.17.11, lodash-es@^4.17.14:
   version "4.17.15"
   resolved "https://registry.npm.taobao.org/lodash-es/download/lodash-es-4.17.15.tgz#21bd96839354412f23d7a10340e5eac6ee455d78"
   integrity sha1-Ib2Wg5NUQS8j16EDQOXqxu5FXXg=
@@ -9113,6 +9125,11 @@ prop-types@15.x, prop-types@^15.5.10, prop-types@^15.5.4, prop-types@^15.5.6, pr
     object-assign "^4.1.1"
     react-is "^16.8.1"
 
+property-expr@^2.0.2:
+  version "2.0.4"
+  resolved "https://registry.npm.taobao.org/property-expr/download/property-expr-2.0.4.tgz#37b925478e58965031bb612ec5b3260f8241e910"
+  integrity sha1-N7klR45YllAxu2EuxbMmD4JB6RA=
+
 proxy-addr@~2.0.5:
   version "2.0.6"
   resolved "https://registry.npm.taobao.org/proxy-addr/download/proxy-addr-2.0.6.tgz#fdc2336505447d3f2f2c638ed272caf614bbb2bf"
@@ -11043,6 +11060,11 @@ symbol-tree@^3.2.2:
   resolved "https://registry.npm.taobao.org/symbol-tree/download/symbol-tree-3.2.4.tgz?cache=0&sync_timestamp=1560363067941&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fsymbol-tree%2Fdownload%2Fsymbol-tree-3.2.4.tgz#430637d248ba77e078883951fb9aa0eed7c63fa2"
   integrity sha1-QwY30ki6d+B4iDlR+5qg7tfGP6I=
 
+synchronous-promise@^2.0.13:
+  version "2.0.15"
+  resolved "https://registry.npm.taobao.org/synchronous-promise/download/synchronous-promise-2.0.15.tgz?cache=0&sync_timestamp=1602162524871&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fsynchronous-promise%2Fdownload%2Fsynchronous-promise-2.0.15.tgz#07ca1822b9de0001f5ff73595f3d08c4f720eb8e"
+  integrity sha1-B8oYIrneAAH1/3NZXz0IxPcg644=
+
 table@^5.2.3:
   version "5.4.6"
   resolved "https://registry.npm.taobao.org/table/download/table-5.4.6.tgz?cache=0&sync_timestamp=1599191046284&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Ftable%2Fdownload%2Ftable-5.4.6.tgz#1292d19500ce3f86053b05f0e8e7e4a3bb21079e"
@@ -11224,6 +11246,11 @@ toidentifier@1.0.0:
   version "1.0.0"
   resolved "https://registry.npm.taobao.org/toidentifier/download/toidentifier-1.0.0.tgz#7e1be3470f1e77948bc43d94a3c8f4d7752ba553"
   integrity sha1-fhvjRw8ed5SLxD2Uo8j013UrpVM=
+
+toposort@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.npm.taobao.org/toposort/download/toposort-2.0.2.tgz#ae21768175d1559d48bef35420b2f4962f09c330"
+  integrity sha1-riF2gXXRVZ1IvvNUILL0li8JwzA=
 
 tough-cookie@^2.3.3, tough-cookie@^2.3.4, tough-cookie@^2.5.0, tough-cookie@~2.5.0:
   version "2.5.0"
@@ -12109,6 +12136,19 @@ yargs@^13.3.0, yargs@^13.3.2:
     which-module "^2.0.0"
     y18n "^4.0.0"
     yargs-parser "^13.1.2"
+
+yup@^0.29.3:
+  version "0.29.3"
+  resolved "https://registry.npm.taobao.org/yup/download/yup-0.29.3.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fyup%2Fdownload%2Fyup-0.29.3.tgz#69a30fd3f1c19f5d9e31b1cf1c2b851ce8045fea"
+  integrity sha1-aaMP0/HBn12eMbHPHCuFHOgEX+o=
+  dependencies:
+    "@babel/runtime" "^7.10.5"
+    fn-name "~3.0.0"
+    lodash "^4.17.15"
+    lodash-es "^4.17.11"
+    property-expr "^2.0.2"
+    synchronous-promise "^2.0.13"
+    toposort "^2.0.2"
 
 zscroller@~0.4.0:
   version "0.4.8"
